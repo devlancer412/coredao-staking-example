@@ -164,7 +164,7 @@ function App() {
     return (
       <button
         onClick={connectWalletHandler}
-        className="cta-button connect-wallet-button"
+        className="cta-button connect-wallet-button text-white"
       >
         Connect Wallet
       </button>
