@@ -259,7 +259,6 @@ function App() {
   return (
     <div className="fixed top-0 left-0 bg-black min-h-screen w-screen">
       <div className="flex items-center justify-center px-2 mt-8">
-        <img className="w-10" src="/src/public/logo.png" />
         <p className="my-3 mx-1 text-4xl font-bold text-gray-200 sm:text-4xl sm:tracking-tight lg:text-4xl">
           Moon Dog Staking
         </p>
