@@ -272,41 +272,50 @@ function App() {
 
           {currentAccount ? (
             <div className="w-full grid grid-cols-4 gap-2">
-              {nfts.map((nft) => (
-                <div
-                  key={nft.id}
-                  className="p-1 rounded border-slate-700 cursor-pointer"
-                >
-                  <img
-                    className="w-full rounded-md"
-                    src={nft.imageUrl}
-                    alt="data"
-                  />
-                  <button
-                    placeholder="Input store number"
-                    onClick={() => (nft?.stakedTime ? unStake : stake)(nft.id)}
-                    className="btn-primary bg-gray-800 mt-8 w-40 rounded disabled:hover:bg-gray-500 disabled:bg-gray-500"
-                    disabled={
-                      (currentTime ?? 0) <
-                      (lockPeriod ?? 0) + (nft.stakedTime ?? 0)
-                    }
+              {nfts.map((nft) => {
+                console.log(
+                  currentTime ?? 0,
+                  (lockPeriod ?? 0) + (nft.stakedTime ?? 0)
+                )
+                return (
+                  <div
+                    key={nft.id}
+                    className="p-1 rounded border-slate-700 cursor-pointer"
                   >
-                    {nft?.stakedTime
-                      ? (currentTime ?? 0) < (lockPeriod ?? 0) + nft.stakedTime
-                        ? 'Lock Period'
-                        : 'UnStake'
-                      : 'Stake'}
-                  </button>
-                  {nft?.stakedTime && currentTime && rewardRate && (
-                    <div className="w-full text-center text-white">
-                      {(currentTime > nft.stakedTime
-                        ? (currentTime - nft.stakedTime) * rewardRate
-                        : 0
-                      ).toFixed(6)}
-                    </div>
-                  )}
-                </div>
-              ))}
+                    <img
+                      className="w-full rounded-md"
+                      src={nft.imageUrl}
+                      alt="data"
+                    />
+                    <button
+                      placeholder="Input store number"
+                      onClick={() =>
+                        (nft?.stakedTime ? unStake : stake)(nft.id)
+                      }
+                      className="btn-primary bg-gray-800 mt-8 w-40 rounded disabled:hover:bg-gray-500 disabled:bg-gray-500"
+                      disabled={
+                        (currentTime ?? 0) <
+                        (lockPeriod ?? 0) + (nft.stakedTime ?? 0)
+                      }
+                    >
+                      {nft?.stakedTime
+                        ? (currentTime ?? 0) <
+                          (lockPeriod ?? 0) + nft.stakedTime
+                          ? 'Lock Period'
+                          : 'UnStake'
+                        : 'Stake'}
+                    </button>
+                    {nft?.stakedTime && currentTime && rewardRate && (
+                      <div className="w-full text-center text-white">
+                        {(currentTime > nft.stakedTime
+                          ? (currentTime - nft.stakedTime) * rewardRate
+                          : 0
+                        ).toFixed(6)}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
             </div>
           ) : (
             connectWalletButton()
