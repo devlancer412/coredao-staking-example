@@ -18,7 +18,7 @@ interface NFTData {
 
 const WOOFAddress = '0xC11c32d243c64E8318557bBFa6966C7C3306d26e'
 const MoondogsAddress = '0x48C3d70b7c80230ed4B039Fc155BB51780b41759'
-const MoondogStakingAddress = '0xaFD966fE0E5DdE79a2c37FD76bb1B1BF7DD8e350'
+const MoondogStakingAddress = '0x310388CBaAab5c6DB2548F1faFf4622B229E02b7'
 
 const getIpfsUrl = (uri: string) => {
   const splited = uri.replace('ipfs://', '').split('/')
@@ -31,6 +31,7 @@ function App() {
   const [currentAccount, setCurrentAccount] = useState(null)
   const [rewardRate, setRewardRate] = useState<number>()
   const [currentTime, setCurrentTime] = useState<number>()
+  const [lockPeriod, setLockPeriod] = useState<number>()
   const [nfts, setNfts] = useState<NFTData[]>([])
 
   const checkWalletIsConnected = async () => {
@@ -211,6 +212,8 @@ function App() {
 
           const rewardRateValue = await stakingContract.rewardRate()
           setRewardRate(parseFloat(formatUnits(rewardRateValue, 18)))
+          const lockPeriodValue = await stakingContract.lockPeriod()
+          setLockPeriod((lockPeriodValue as BigNumber).toNumber())
 
           const temp: NFTData[] = []
           for (const tokenId of tokenIds) {
@@ -251,6 +254,8 @@ function App() {
     })()
   }, [currentAccount])
 
+  console.log(lockPeriod, currentTime, rewardRate)
+
   return (
     <div className="fixed top-0 left-0 bg-black min-h-screen w-screen">
       <div className="flex items-center justify-center px-2 mt-8">
@@ -280,9 +285,17 @@ function App() {
                   <button
                     placeholder="Input store number"
                     onClick={() => (nft?.stakedTime ? unStake : stake)(nft.id)}
-                    className="btn-primary bg-gray-800 mt-8 w-40 rounded"
+                    className="btn-primary bg-gray-800 mt-8 w-40 rounded disabled:hover:bg-gray-500 disabled:bg-gray-500"
+                    disabled={
+                      (currentTime ?? 0) <
+                      (lockPeriod ?? 0) + (nft.stakedTime ?? 0)
+                    }
                   >
-                    {nft?.stakedTime ? 'UnStake' : 'Stake'}
+                    {nft?.stakedTime
+                      ? (currentTime ?? 0) < (lockPeriod ?? 0) + nft.stakedTime
+                        ? 'Lock Period'
+                        : 'UnStake'
+                      : 'Stake'}
                   </button>
                   {nft?.stakedTime && currentTime && rewardRate && (
                     <div className="w-full text-center text-white">
