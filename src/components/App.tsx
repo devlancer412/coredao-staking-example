@@ -257,18 +257,18 @@ function App() {
   return (
     <div className="fixed top-0 left-0 bg-black min-h-screen w-screen">
       <div className="flex items-center justify-center px-2 mt-8">
-        <p className="my-3 mx-1 text-4xl font-bold text-gray-200 sm:text-4xl sm:tracking-tight lg:text-4xl">
+        <p className="my-3 mx-1 text-4xl font-bold text-gray-200 sm:text-4xl sm:tracking-tight lg:text-4xl text-center">
           Moon Dog Staking
         </p>
       </div>
-      <div className="mx-auto max-w-screen-xl py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-screen-xl py-[16px] px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <p className="text-xl text-gray-400 mb-4">
             Click "Stake" or "UnStake" to stake your MoonDog
           </p>
 
           {currentAccount ? (
-            <div className="w-full grid grid-cols-4 gap-2 h-[calc(100vh-250px)] overflow-auto">
+            <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 h-[calc(100vh-205px)] overflow-auto">
               {nfts.map((nft) => {
                 console.log(
                   currentTime ?? 0,
