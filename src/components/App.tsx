@@ -254,8 +254,6 @@ function App() {
     })()
   }, [currentAccount])
 
-  console.log(lockPeriod, currentTime, rewardRate)
-
   return (
     <div className="fixed top-0 left-0 bg-black min-h-screen w-screen">
       <div className="flex items-center justify-center px-2 mt-8">
@@ -270,7 +268,7 @@ function App() {
           </p>
 
           {currentAccount ? (
-            <div className="w-full grid grid-cols-4 gap-2">
+            <div className="w-full grid grid-cols-4 gap-2 h-[calc(100vh-250px)] overflow-auto">
               {nfts.map((nft) => {
                 console.log(
                   currentTime ?? 0,
